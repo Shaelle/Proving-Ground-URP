@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class Hit : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class Hit : MonoBehaviour
     [SerializeField] GameObject hitMarkPrefab;
 
     Vector3 targetPos = Vector3.zero;
+
+    bool isRightDown = false;
+
+    public static event Action<bool> OnFireBeam;
 
 
     public void MouseMove(InputAction.CallbackContext context)
@@ -32,4 +37,19 @@ public class Hit : MonoBehaviour
             Instantiate(hitMarkPrefab, targetPos, Quaternion.identity);
         }
     }
+
+
+    public void MouseRightClick(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            OnFireBeam?.Invoke(true);
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            OnFireBeam?.Invoke(false);
+        }
+    }
+
+
 }
