@@ -9,6 +9,8 @@ public class Hit : MonoBehaviour
 
     [SerializeField] GameObject hitMarkPrefab;
 
+    [SerializeField] AudioClip leftClickSound;
+
     Vector3 targetPos = Vector3.zero;
 
     bool isRightDown = false;
@@ -35,6 +37,7 @@ public class Hit : MonoBehaviour
         if (context.phase == InputActionPhase.Performed && targetPos != Vector3.zero)
         {
             Instantiate(hitMarkPrefab, targetPos, Quaternion.identity);
+            AudioFX.instance.Play(leftClickSound);
         }
     }
 
